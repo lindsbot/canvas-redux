@@ -3,7 +3,12 @@ import { store } from '../store/store';
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-export function draw() {
+export function Rectangles() {
+
+  canvas.addEventListener('click', (evt: MouseEvent) => {
+    store.dispatch({type: 'CANVAS_CLICK', evt: evt});
+  });
+
   function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -22,9 +27,9 @@ export function draw() {
 
   render();
 
-  setInterval(() => {
-    store.dispatch({type: 'JUMBLE'});
-  }, 100);
+  // setInterval(() => {
+  //   store.dispatch({type: 'JUMBLE'});
+  // }, 100);
 
   // setInterval(() => {
   //   store.dispatch({type: 'TRANSLATE', x: 20, y: 10});

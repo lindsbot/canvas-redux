@@ -1,4 +1,4 @@
-import { rand, randomX, randomY, randomHSL } from '../../utils';
+import { rand, randomX, randomY, randomHSL, intersectsRect } from '../../utils';
 
 class RandomRectangle implements Shapes.Rectangle {
   x: number;
@@ -29,6 +29,18 @@ export function rectanglesReducer(state: any, action: any) {
     case 'SEED':
       return {
         rectangles: createRectanglesArray(50)
+      }
+    case 'CANVAS_CLICK':
+      let mousePos = {
+        x: action.evt.clientX,
+        y: action.evt.clientY
+      }
+      state.rectangles.forEach((rect: Shapes.Rectangle) => {
+        intersectsRect(mousePos, rect);
+      });
+
+      return {
+        rectangles: state.rectangles
       }
     case 'TRANSLATE':
       return {

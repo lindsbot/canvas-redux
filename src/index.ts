@@ -1,3 +1,3 @@
-import * as Rectangles from './components/rectangles';
+import { Rectangles } from './components/rectangles';
 
-Rectangles.draw();
+Rectangles();
