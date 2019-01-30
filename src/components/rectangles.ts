@@ -13,7 +13,9 @@ export function Rectangles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     let state = store.getState();
+    console.log(state);
     state.rectangles.forEach(function(rect: any) {
+      console.log(rect);
       ctx.fillStyle = rect.color;
       ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
     });
@@ -27,9 +29,9 @@ export function Rectangles() {
 
   render();
 
-  // setInterval(() => {
-  //   store.dispatch({type: 'JUMBLE'});
-  // }, 100);
+  setInterval(() => {
+    store.dispatch({type: 'JUMBLE'});
+  }, 1000);
 
   // setInterval(() => {
   //   store.dispatch({type: 'TRANSLATE', x: 20, y: 10});

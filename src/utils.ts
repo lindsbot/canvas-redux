@@ -35,9 +35,13 @@ export function randomHSL() {
 }
 
 export function intersectsRect(mousePos: Coordinates, rect: Shapes.Rectangle) {
-  if ((mousePos.x >= rect.x && mousePos.x <= rect.x + rect.width) && (mousePos.y >= rect.y && mousePos.y <= rect.y + rect.height)) {
-    console.log(mousePos);
-    console.log('got me');
-    console.log(rect);
+  // this is going to get tedious for other shapes...
+  if (
+      mousePos.x >= rect.x &&
+      mousePos.x <= rect.x + rect.width &&
+      mousePos.y >= rect.y &&
+      mousePos.y <= rect.y + rect.height
+    ) {
+    return true;
   }
 }

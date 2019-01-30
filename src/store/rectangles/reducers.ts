@@ -1,13 +1,15 @@
 import { rand, randomX, randomY, randomHSL, intersectsRect } from '../../utils';
 
 class RandomRectangle implements Shapes.Rectangle {
+  id: number;
   x: number;
   y: number;
   width: number;
   height: number;
-  color: any;
+  color: string;
 
-  constructor() {
+  constructor(id: number) {
+    this.id = id;
     this.x = randomX();
     this.y = randomY();
     this.width = 30;
@@ -18,8 +20,8 @@ class RandomRectangle implements Shapes.Rectangle {
 
 function createRectanglesArray(count: number) {
   let rects = [];
-  for (let i = 0; i < count; i++) {
-    rects.push(new RandomRectangle());
+  for (let i = 1; i <= count; i++) {
+    rects.push(new RandomRectangle(i));
   }
   return rects;
 }
@@ -31,16 +33,29 @@ export function rectanglesReducer(state: any, action: any) {
         rectangles: createRectanglesArray(50)
       }
     case 'CANVAS_CLICK':
+      let hits = [];
       let mousePos = {
         x: action.evt.clientX,
         y: action.evt.clientY
       }
       state.rectangles.forEach((rect: Shapes.Rectangle) => {
-        intersectsRect(mousePos, rect);
+        if (intersectsRect(mousePos, rect)) {
+          hits.push(rect);
+        };
       });
 
+      console.log(hits);
+
+      // todo: only randomize the rects in hits[]
+
       return {
-        rectangles: state.rectangles
+        rectangles: state.rectangles.map((rect: Shapes.Rectangle) => {
+          return {
+            ...rect,
+            x: randomX(),
+            y: randomY()
+          }
+        })
       }
     case 'TRANSLATE':
       return {

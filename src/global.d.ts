@@ -1,8 +1,9 @@
 declare namespace Shapes {
   interface Rectangle {
+    id: number;
     x: number;
     y: number;
-    color: any;
+    color: string;
     width: number;
     height: number;
   }
