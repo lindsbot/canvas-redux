@@ -1,11 +1,14 @@
 import { store } from '../store/store';
+import { fromEvent }from 'rxjs';
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
 export function Rectangles() {
 
-  canvas.addEventListener('click', (evt: MouseEvent) => {
+  const click$ = fromEvent(canvas, 'click');
+
+  click$.subscribe((evt) => {
     store.dispatch({type: 'CANVAS_CLICK', evt: evt});
   });
 
@@ -13,9 +16,7 @@ export function Rectangles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     let state = store.getState();
-    console.log(state);
     state.rectangles.forEach(function(rect: any) {
-      console.log(rect);
       ctx.fillStyle = rect.color;
       ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
     });
