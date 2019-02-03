@@ -2,7 +2,7 @@ import { store } from '../store/store';
 import { fromEvent, from, interval, zip, Observable, timer }from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators'
 
-import { wind$ } from '../streams';
+import { wind$ } from '../streams/weather-streams';
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
