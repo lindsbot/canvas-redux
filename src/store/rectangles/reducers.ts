@@ -58,12 +58,13 @@ export function rectanglesReducer(state: any, action: any) {
         })
       }
     case 'TRANSLATE':
+      let {x, y} = action.vector;
       return {
         rectangles: state.rectangles.map((rect: Shapes.Rectangle) => {
           return {
             ...rect,
-            x: rect.x + action.x,
-            y: rect.y + action.y
+            x: rect.x + (x || 0),
+            y: rect.y + (y || 0)
           };
         })
       };
@@ -77,6 +78,16 @@ export function rectanglesReducer(state: any, action: any) {
           }
         })
       };
+    case 'UPDATE_RADIUS':
+      return {
+        rectangles: state.rectangles.map((rect: Shapes.Rectangle) => {
+          return {
+            ...rect,
+            width: action.radius,
+            height: action.radius
+          }
+        })
+      }
     default:
       return state;
   }

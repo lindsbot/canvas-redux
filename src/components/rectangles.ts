@@ -1,5 +1,8 @@
 import { store } from '../store/store';
-import { fromEvent }from 'rxjs';
+import { fromEvent, from, interval, zip, Observable, timer }from 'rxjs';
+import { filter, map, tap, withLatestFrom } from 'rxjs/operators'
+
+import { wind$ } from '../streams';
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -8,9 +11,32 @@ export function Rectangles() {
 
   const click$ = fromEvent(canvas, 'click');
 
-  click$.subscribe((evt) => {
-    store.dispatch({type: 'CANVAS_CLICK', evt: evt});
+  const radius$ = from([50, 60, 70, 80, 90, 100]);
+  const timer$ = interval(1000);
+  const radiusTimer$ = zip(radius$, timer$);
+
+  let windTimer$ = timer$.pipe(
+    withLatestFrom(wind$),
+    map(([, wind]) => wind),
+  );
+
+  windTimer$.subscribe((data:any) => {
+    store.dispatch({
+      type: 'TRANSLATE',
+      vector: {
+        x: data.wind_mph
+      }
+    });
   });
+
+  // click$.subscribe((evt) => {
+  //   store.dispatch({type: 'CANVAS_CLICK', evt: evt});
+  // });
+
+  // radiusTimer$
+  //   .subscribe((r) => {
+  //     store.dispatch({type: 'UPDATE_RADIUS', radius: r[0]});
+  //   });
 
   function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,15 +53,5 @@ export function Rectangles() {
   store.subscribe(function() {
     render();
   });
-
-  render();
-
-  setInterval(() => {
-    store.dispatch({type: 'JUMBLE'});
-  }, 1000);
-
-  // setInterval(() => {
-  //   store.dispatch({type: 'TRANSLATE', x: 20, y: 10});
-  // }, 1000)
 
 }
