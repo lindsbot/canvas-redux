@@ -6,7 +6,10 @@ import { Point } from 'paper';
 
 // weather$.subscribe();
 
-let p;
+let p: MovingParticle;
+let loc = new Point(25, 25);
+let vel = new Point(0.01, 0.01);
+let acc = new Point(0.001, 0.001);
 
 function setupCanvas() {
   const canvas = document.querySelector('canvas');
@@ -14,12 +17,7 @@ function setupCanvas() {
   p = new MovingParticle(loc, vel, acc, 25);
 }
 
-let loc = new Point(25, 25);
-let vel = new Point(0.01, 0.01);
-let acc = new Point(0.001, 0.001);
-
 function draw() {
-
   p.render();
 }
 

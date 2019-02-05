@@ -15,19 +15,19 @@ export function Rectangles() {
   const timer$ = interval(1000);
   const radiusTimer$ = zip(radius$, timer$);
 
-  let windTimer$ = timer$.pipe(
-    withLatestFrom(wind$),
-    map(([, wind]) => wind),
-  );
+  // let windTimer$ = timer$.pipe(
+  //   withLatestFrom(wind$),
+  //   map(([, wind]) => wind),
+  // );
 
-  windTimer$.subscribe((data:any) => {
-    store.dispatch({
-      type: 'TRANSLATE',
-      vector: {
-        x: data.wind_mph
-      }
-    });
-  });
+  // windTimer$.subscribe((data:any) => {
+  //   store.dispatch({
+  //     type: 'TRANSLATE',
+  //     vector: {
+  //       x: data.wind_mph
+  //     }
+  //   });
+  // });
 
   // click$.subscribe((evt) => {
   //   store.dispatch({type: 'CANVAS_CLICK', evt: evt});

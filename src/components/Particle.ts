@@ -5,20 +5,19 @@ export class Particle {
 
   constructor(location:Point) {
     this.location = location;
-    this.render();
   }
 
   render = () => {
     let shape = Shape.Circle(this.location, 5);
     shape.strokeColor = 'black';
-    shape.view.draw();
+    shape.position = this.location;
   }
 }
 
 export class MovingParticle extends Particle {
   public velocity: Point;
   public acceleration: Point;
-  // private shape: Shape;
+  private shape: Shape;
 
   constructor(location:Point, velocity:Point, acceleration:Point, maxSpeed:number) {
     super(location);
@@ -26,20 +25,15 @@ export class MovingParticle extends Particle {
     this.velocity = velocity;
     this.acceleration = acceleration;
 
-
-  }
-
-  update = () => {
-    this.velocity = this.velocity.add(this.acceleration);
-    this.location = this.location.add(this.velocity);
-    // console.log(this.location);
+    this.shape = Shape.Circle(this.location, 5);
+    this.shape.strokeColor = 'black';
   }
 
   render = () => {
-    this.update();
+    this.velocity = this.velocity.add(this.acceleration);
+    this.location = this.location.add(this.velocity);
 
-    let shape = Shape.Circle(this.location, 5);
-    shape.strokeColor = 'black';
-    shape.view.draw();
+    this.shape.position = this.location;
   }
+
 }

@@ -9,22 +9,22 @@ export const weather$ = from(fetch(weatherURL).then(res => res.json()))
   tap((a) => console.log(a))
 );
 
-// export const wind$ = weather$.pipe(
-//   map((d) => {
-//     return {
-//       wind_degrees: d.wind_degrees,
-//       wind_dir: d.wind_dir,
-//       wind_gust_mph: d.wind_gust_mph,
-//       wind_mph: d.wind_mph
-//     }
-//   })
-// );
+export const wind$ = weather$.pipe(
+  map((d) => {
+    return {
+      wind_degrees: d.wind_degrees,
+      wind_dir: d.wind_dir,
+      wind_gust_mph: d.wind_gust_mph,
+      wind_mph: d.wind_mph
+    }
+  })
+);
 
-// export const pressure$ = weather$.pipe(
-//   map((d) => {
-//     return {
-//       pressure_in: d.pressure_in,
-//       pressure_mb: d.pressure_mb
-//     }
-//   })
-// )
+export const pressure$ = weather$.pipe(
+  map((d) => {
+    return {
+      pressure_in: d.pressure_in,
+      pressure_mb: d.pressure_mb
+    }
+  })
+)
